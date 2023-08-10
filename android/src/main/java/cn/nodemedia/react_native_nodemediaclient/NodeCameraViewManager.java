@@ -131,6 +131,7 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
 
     @Override
     public void receiveCommand(RCTNodeCameraView root, int commandId, @Nullable ReadableArray args) {
+        System.out.println(commandId);
         switch (commandId) {
             case COMMAND_STARTPREV_ID:
                 root.startPrev();

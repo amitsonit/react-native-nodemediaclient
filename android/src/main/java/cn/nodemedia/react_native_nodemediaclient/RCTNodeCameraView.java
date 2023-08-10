@@ -135,6 +135,15 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         }
 
     }
+    public void muteAudio(){
+        mNodePublisher.stop();
+        System.out.println("muteAudio");
+    }
+
+    public void unMuteAudio(){
+        mNodePublisher.start();
+        System.out.println("unMuteAudio");
+    }
 
     @Override
     public void onHostResume() {

@@ -16,6 +16,7 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -34,6 +35,11 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
     private static final String COMMAND_SWITCH_CAM_NAME = "switchCamera";
     private static final int COMMAND_SWITCH_FLASH_ID = 5;
     private static final String COMMAND_SWITCH_FLASH_NAME = "flashEnable";
+    private static final int COMMAND_MUTE_AUDIO_ID = 6;
+    private static final String COMMAND_MUTE_AUDIO_NAME = "mute";
+    private static final int COMMAND_UNMUTE_AUDIO_ID = 7;
+    private static final String COMMAND_UNMUTE_AUDIO_NAME = "unMute";
+
 
     @Override
     public String getName() {
@@ -111,9 +117,16 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
     @Nullable
     @Override
     public Map<String, Integer> getCommandsMap() {
-        return MapBuilder.of(COMMAND_STARTPREV_NAME, COMMAND_STARTPREV_ID, COMMAND_STOPPREV_NAME, COMMAND_STOPPREV_ID,
-                COMMAND_START_NAME, COMMAND_START_ID, COMMAND_STOP_NAME, COMMAND_STOP_ID, COMMAND_SWITCH_CAM_NAME,
-                COMMAND_SWITCH_CAM_ID, COMMAND_SWITCH_FLASH_NAME, COMMAND_SWITCH_FLASH_ID);
+        Map<String, Integer> commandsMap = new HashMap<>();
+        commandsMap.put(COMMAND_STARTPREV_NAME, COMMAND_STARTPREV_ID);
+        commandsMap.put(COMMAND_STOPPREV_NAME, COMMAND_STOPPREV_ID);
+        commandsMap.put(COMMAND_START_NAME, COMMAND_START_ID);
+        commandsMap.put(COMMAND_STOP_NAME, COMMAND_STOP_ID);
+        commandsMap.put(COMMAND_SWITCH_CAM_NAME, COMMAND_SWITCH_CAM_ID);
+        commandsMap.put(COMMAND_SWITCH_FLASH_NAME, COMMAND_SWITCH_FLASH_ID);
+        commandsMap.put(COMMAND_MUTE_AUDIO_NAME, COMMAND_MUTE_AUDIO_ID);
+        commandsMap.put(COMMAND_UNMUTE_AUDIO_NAME, COMMAND_UNMUTE_AUDIO_ID);
+        return commandsMap;
     }
 
     @Override
@@ -137,6 +150,13 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
             case COMMAND_SWITCH_FLASH_ID:
                 root.setFlashEnable(args.getBoolean(0));
                 break;
+            case COMMAND_MUTE_AUDIO_ID:
+                root.muteAudio();
+                break;
+
+            case COMMAND_UNMUTE_AUDIO_ID:
+                root.unMuteAudio();
+            break;
         }
     }
 }

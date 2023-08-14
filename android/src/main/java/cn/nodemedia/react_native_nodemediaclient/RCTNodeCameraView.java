@@ -77,21 +77,6 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     public void setOutputUrl(String url) {
         mNodePublisher.setOutputUrl(url);
     }
-    public void setMute(boolean mute) {
-        try {
-            if (mute && !isMuted) { // If we want to mute and it's currently unmuted
-                mNodePublisher.muteMicrophone();
-                Log.d("RCTNodeCameraView", "Microphone muted");
-                isMuted = true;
-            } else if (!mute && isMuted) { // If we want to unmute and it's currently muted
-                mNodePublisher.unmuteMicrophone();
-                Log.d("RCTNodeCameraView", "Microphone unmuted");
-                isMuted = false;
-            }
-        } catch (Exception e) {
-            Log.e("RCTNodeCameraView", "Error setting microphone mute state", e);
-        }
-    }
 
     public void setCryptoKey(String cryptoKey) {
         mNodePublisher.setCryptoKey(cryptoKey);

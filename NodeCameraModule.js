@@ -37,7 +37,7 @@ const NodeCameraView = (props, ref) => {
     if(videoRef.current)
       UIManager.dispatchViewManagerCommand(
         findNodeHandle(videoRef.current),
-      UIManager.getViewManagerConfig('RCTNodeCamera').Commands.muteAudio,
+      UIManager.getViewManagerConfig('RCTNodeCamera').Commands.muteStreamAudio,
       null
     );
   }
@@ -46,7 +46,7 @@ const NodeCameraView = (props, ref) => {
     if(videoRef.current)
       UIManager.dispatchViewManagerCommand(
         findNodeHandle(videoRef.current),
-      UIManager.getViewManagerConfig('RCTNodeCamera').Commands.unMuteAudio,
+      UIManager.getViewManagerConfig('RCTNodeCamera').Commands.unmuteStreamAudio,
       null
     );
   }

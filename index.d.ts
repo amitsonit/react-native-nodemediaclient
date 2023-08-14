@@ -27,6 +27,11 @@ declare module "react-native-nodemediaclient" {
     cryptoKey?: string;
     /** Called when streaming status has changed */
     onStatus?(code?: OutputStreamStatus, status?: string): any;
+    /**
+     * @description Is microphone muted?
+     * @default false
+     */
+    isMuted?: boolean;
   }
 
   export interface NodeCameraViewType {
@@ -42,10 +47,6 @@ declare module "react-native-nodemediaclient" {
     startPreview(): any;
     /** Stop camera preview */
     stopPreview(): any;
-    /** Mute Audio */
-    muteAudio(): any;
-    /** unMute Audio */
-    unMuteAudio(): any;
   }
 
   export interface VideoConfig {

@@ -12,6 +12,7 @@ import android.view.Choreographer;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import android.media.AudioManager;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.LifecycleEventListener;
@@ -27,6 +28,7 @@ import cn.nodemedia.NodePublisherDelegate;
 public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventListener {
     private NodePublisher mNodePublisher;
     private Boolean isAutoPreview = true;
+    private AudioManager audioManager;
 
     private int cameraId = -1;
     private boolean cameraFrontMirror = true;
@@ -44,10 +46,14 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
     private boolean denoise = false;
     private boolean dynamicRateEnable = true;
     private int smoothSkinLevel = 0;
+    private boolean isMuted = false;
 
 
     public RCTNodeCameraView(@NonNull ThemedReactContext context) {
         super(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            audioManager = (AudioManager) context.getSystemService(context.AUDIO_SERVICE);
+        }
         setupLayoutHack();
         context.addLifecycleEventListener(this);
 
@@ -70,6 +76,21 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     public void setOutputUrl(String url) {
         mNodePublisher.setOutputUrl(url);
+    }
+    public void setMute(boolean mute) {
+        try {
+            if (mute && !isMuted) { // If we want to mute and it's currently unmuted
+                mNodePublisher.muteMicrophone();
+                Log.d("RCTNodeCameraView", "Microphone muted");
+                isMuted = true;
+            } else if (!mute && isMuted) { // If we want to unmute and it's currently muted
+                mNodePublisher.unmuteMicrophone();
+                Log.d("RCTNodeCameraView", "Microphone unmuted");
+                isMuted = false;
+            }
+        } catch (Exception e) {
+            Log.e("RCTNodeCameraView", "Error setting microphone mute state", e);
+        }
     }
 
     public void setCryptoKey(String cryptoKey) {
@@ -135,14 +156,19 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
         }
 
     }
-    public void muteAudio(){
-        mNodePublisher.stop();
-        System.out.println("muteAudio");
+
+    public void muteStreamAudio() {
+        if (audioManager != null) {
+            int streamType = AudioManager.STREAM_MUSIC;
+            audioManager.setStreamMute(streamType, true);
+        }
     }
 
-    public void unMuteAudio(){
-        mNodePublisher.start();
-        System.out.println("unMuteAudio");
+    public void unmuteStreamAudio() {
+        if (audioManager != null) {
+            int streamType = AudioManager.STREAM_MUSIC;
+            audioManager.setStreamMute(streamType, false);
+        }
     }
 
     @Override

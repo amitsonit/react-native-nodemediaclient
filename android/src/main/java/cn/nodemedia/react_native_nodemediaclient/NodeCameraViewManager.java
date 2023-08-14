@@ -39,6 +39,7 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
     private static final String COMMAND_MUTE_AUDIO_NAME = "mute";
     private static final int COMMAND_UNMUTE_AUDIO_ID = 7;
     private static final String COMMAND_UNMUTE_AUDIO_NAME = "unMute";
+    
 
 
     @Override
@@ -114,6 +115,7 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
         view.setCryptoKey(cryptoKey);
     }
 
+
     @Nullable
     @Override
     public Map<String, Integer> getCommandsMap() {
@@ -152,12 +154,13 @@ public class NodeCameraViewManager extends ViewGroupManager<RCTNodeCameraView> {
                 root.setFlashEnable(args.getBoolean(0));
                 break;
             case COMMAND_MUTE_AUDIO_ID:
-                root.muteAudio();
+                root.muteStreamAudio();
                 break;
 
             case COMMAND_UNMUTE_AUDIO_ID:
-                root.unMuteAudio();
-            break;
+                root.unmuteStreamAudio();
+                break;
+            
         }
     }
 }

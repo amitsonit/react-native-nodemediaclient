@@ -51,9 +51,8 @@ public class RCTNodeCameraView extends NodeCameraView implements LifecycleEventL
 
     public RCTNodeCameraView(@NonNull ThemedReactContext context) {
         super(context);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             audioManager = (AudioManager) context.getSystemService(context.AUDIO_SERVICE);
-        }
+        
         setupLayoutHack();
         context.addLifecycleEventListener(this);
 
